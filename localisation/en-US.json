@@ -1,0 +1,24 @@
+{
+    "check": "✅",
+    "x": "❌",
+    "pong": "🏓",
+    "hourglass": "⏳",
+
+    "command_err": "There was an error executing the command!",
+
+    "embed_default_footer": "Still having issues? /discord to ask our staff!",
+
+    "cooldown": "Calm down buckaroo! You will be able to use this command in",
+    "ping": "Pong! Bot ping is",
+    "ping2": "ms",
+
+    "settings_main_menu": "Settings Main Menu",
+    "settings_you_can_change": "List of settings you can change:",
+    "settings_you_can_change_list": "language",
+    "settings_language_title": "Language Selection",
+    "settings_language_field1": "Here is the list of languages you can choose from:",
+    "settings_language_field2": "🇩🇪 German\n🇺🇸 English\n🇪🇸 Spanish\n🇫🇷 French\n🇳🇱 Dutch",
+    "settings_language_field3": "How to change languages?",
+    "settings_language_field4": "Use the command /language",
+    "settings_error_no_argument": "⚠️ Please specify a argument for this command!"
+}

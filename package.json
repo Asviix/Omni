@@ -1,0 +1,11 @@
+{
+  "main": "index.js",
+  "dependencies": {
+    "colorette": "^2.0.20",
+    "discord.js": "^14.11.0",
+    "fs": "^0.0.1-security",
+    "moment": "^2.29.4",
+    "mysql": "^2.18.1",
+    "util": "^0.12.5"
+  }
+}
