@@ -7,11 +7,16 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName("ping")
         .setDescription("Replies with Pong!"),
-    async execute (interaction, lang) {
-        await interaction.deferReply()
+    async execute (interaction, client, lang) {
+        await interaction.deferReply({
+            ephemeral:true
+        })
         const reply = await interaction.fetchReply()
         const ping = reply.createdTimestamp - interaction.createdTimestamp
 
-        interaction.editReply(`${lang.pong} ${lang.ping} ${ping}${lang.ping2}`)
+        interaction.editReply({
+            content: `${lang.pong} ${eval(lang.ping)}`,
+            ephemeral: true
+        })
     }
 }

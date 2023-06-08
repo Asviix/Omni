@@ -14,7 +14,7 @@ exports.log = (content, type = "log") => {
         }
 
         case "warning": {
-            return console.log(`${timeStamp} ${colorette.bgYellow(content.toUpperCase())}`)
+            return console.log(`${timestamp} ${colorette.bgYellow(content.toUpperCase())}`)
         }
 
         case "error": {

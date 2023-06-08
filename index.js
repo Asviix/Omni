@@ -12,14 +12,14 @@ const client = new Discord.Client({ intents: [GatewayIntentBits.Guilds] })
 //#region CONST
 const config = require("./config.json")
 const dbpassword = require("./dbpassword.json")
-const token = require("./token.json")
+const { maintoken, devtoken } = require("./token.json")
 const logger = require("./modules/Logger")
 //#endregion
 
 client.db = mysql.createConnection({
     host: "localhost",
-    user: "Omni",
-    port: "3306",
+    user: "root",
+    port: "",
     password: dbpassword,
     charset: "utf8_bin",
     database: "omni"
@@ -31,16 +31,19 @@ client.db.connect(function(err) {
 })
 
 client.commands = new Discord.Collection()
+client.subcommands = new Discord.Collection()
 client.cooldowns = new Discord.Collection()
 require("./modules/functions") (client)
 
 const init = async () => {
 
-    const foldersPath = path.join(__dirname, "commands")
-    const commandFolders = fs.readdirSync(foldersPath)
+    const commandsfoldersPath = path.join(__dirname, "commands")
+    const commandsFolders = fs.readdirSync(commandsfoldersPath)
+	const subcommandsPath = path.join(__dirname, "sub_commands")
+	const subcommandsFiles = fs.readdirSync(subcommandsPath).filter(file => file.endsWith('.js'))
 
-    for (const folder of commandFolders) {
-	    const commandsPath = path.join(foldersPath, folder)
+    for (const folder of commandsFolders) {
+	    const commandsPath = path.join(commandsfoldersPath, folder)
 	    const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith(".js"))
 	    for (const file of commandFiles) {
     		const filePath = path.join(commandsPath, file)
@@ -54,6 +57,17 @@ const init = async () => {
 	    }
     }
 
+	for (const file of subcommandsFiles) {
+		const filePath = path.join(subcommandsPath, file)
+		const subcommand = require(filePath)
+		if ('data' in subcommand && 'execute' in subcommand) {
+			client.subcommands.set(subcommand.data.name, subcommand)
+			logger.log(`Loaded sub command: ${subcommand.data.name}`)
+		} else {
+			logger.warning(`The command at ${filePath} is missing a required "data" or "execute" property.`)
+		}
+	}
+
     const eventsPath = path.join(__dirname, "events")
     const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith(".js"))
 
@@ -66,8 +80,10 @@ const init = async () => {
     		client.on(event.name, (...args) => event.execute(...args))
     	}
     }
+
+	client.init_db()
 }
 
-client.login(token)
+client.login(devtoken)
 
 init()
